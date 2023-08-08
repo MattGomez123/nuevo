@@ -1,0 +1,161 @@
+
+public class Test {
+
+    public static void main(String[] args) {
+     
+        Directorio direc= new Directorio();
+        Clientes cliente1=new Clientes(20000000, "Ar", "V", "Caba", "Pepino 100");
+        Clientes cliente2=new Clientes(30000000, "Br", "A", "San Telmo", "Pepino 100");
+        Clientes cliente3=new Clientes(40000000, "Cr", "B", "Rosario", "Pepino 100");
+        Clientes cliente4=new Clientes(50000000, "Dr", "C", "Santa Fe", "Pepino 100");
+        
+        
+        direc.agregarCliente(1234567, cliente1);
+        direc.agregarCliente(9876543, cliente2);
+        direc.agregarCliente(5555444, cliente3);
+        direc.agregarCliente(1235687, cliente4);
+        direc.agregarCliente(1984653, cliente4);
+
+        System.out.println(direc.buscarCliente(5555444).getNombre());
+            
+        System.out.println(direc.buscarTelefono("B"));
+        
+        System.out.println(direc.buscarCliente("Santa Fe"));
+//        direc.borrarCliente(1234567);
+        System.out.println(direc.buscarCliente(1234567).getNombre());
+      
+    }
+    
+}
+
+clase cliente:
+
+public class Clientes {
+
+    private int dni;
+
+    private String nombre;
+
+    private String apellido;
+
+    private String ciudad;
+
+    private String direccion;
+
+    public Clientes() {
+    }
+
+    public Clientes(int dni, String nombre, String apellido, String ciudad, String direccion) {
+        this.dni = dni;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.ciudad = ciudad;
+        this.direccion = direccion;
+    }
+
+    public int getDni() {
+        return dni;
+    }
+
+    public void setDni(int dni) {
+        this.dni = dni;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public String getCiudad() {
+        return ciudad;
+    }
+
+    public void setCiudad(String ciudad) {
+        this.ciudad = ciudad;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    @Override
+    public String toString() {
+        return "Clientes{" + "dni=" + dni + ", nombre=" + nombre + ", apellido=" + apellido + ", ciudad=" + ciudad + ", direccion=" + direccion + '}';
+    }
+ 
+}
+
+clase Directorio:
+
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class Directorio {
+
+    private int telefono;
+
+    private HashMap<Integer, Clientes> clientes=new HashMap<>();
+
+    public Directorio() {
+        
+    }
+    
+    public void agregarCliente(int nroTelefono, Clientes cliente) {
+        
+        clientes.put(nroTelefono, cliente);
+        
+    }
+
+    public Clientes buscarCliente(int nroTelefono) {
+        return clientes.get(nroTelefono);
+    }
+
+    public List<Integer> buscarTelefono(String apellido) {
+        List<Integer>lista=new ArrayList();
+        for (Map.Entry<Integer, Clientes> aux : clientes.entrySet()) {
+            Integer key = aux.getKey();
+            Clientes value = aux.getValue();
+            if(value.getApellido().equals(apellido)){
+                lista.add(key);
+            }
+            
+        }return lista;
+    }
+
+    public List<Clientes> buscarCliente(String ciudad) {
+       List<Clientes> lista=new ArrayList();
+        for (Map.Entry<Integer, Clientes> aux : clientes.entrySet()) {
+            Integer key = aux.getKey();
+            Clientes value = aux.getValue();
+            if(value.getCiudad().equals(ciudad)){
+                lista.add(value);
+            }
+        }
+        return lista;
+    }
+
+    public void borrarCliente(int nroTelefono) {
+        
+     clientes.remove(nroTelefono);
+        
+    }
+}
+
